@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public class RequestValidator {
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
     private static final String operators = "AND|OR|NOT|AND NOT|OR NOT";
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     private Matcher searchNoneReadable(String input) {
         Pattern pattern = Pattern.compile("not+ | and+ | or+|\\n+|[\\x00\\x08\\x0B\\x0C\\x0E-\\x1F]");
