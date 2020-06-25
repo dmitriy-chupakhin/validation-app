@@ -15,17 +15,18 @@ public class RequestValidator {
     }
 
     private Matcher searchNoneClosedTag(String input) {
-        Pattern pattern = Pattern.compile("<([^/]+)>[^<>()]+?(?=" + operators + "|[()]|(<(?!/)\\1>))");
+        Pattern pattern = Pattern.compile("<([^/]+)>[^<>()]*(?=" + operators + "|[()]|(<(?!/)\\1>)|$)");
         return pattern.matcher(input);
     }
 
     private Matcher searchNoneOpenedTag(String input) {
-        Pattern pattern = Pattern.compile("((?<=" + operators + "|[()])[^<>()]+?(</.+>))|(^(?!" + operators + "|[<(]).+?)");
+        Pattern pattern = Pattern.compile("((?<=" + operators + "|[()])[^<>()]*?(</.+>))|(^(?!" + operators + "|[<(]).+?)");
         return pattern.matcher(input);
     }
 
     private Matcher searchNoneOperators(String input) {
-        Pattern pattern = Pattern.compile("([)]|.+?>)\\s*(?!" + operators + ")\\s*([(]|<.*?)");
+        Pattern pattern = Pattern.compile("([)]\\s*)(?!" + operators + ")([(]+|(<[^/]+>)+)" +
+                "|(</.+>\\s*)(?!" + operators + ")([(]+|(<[^/]+>)+)");
         return pattern.matcher(input);
     }
 
